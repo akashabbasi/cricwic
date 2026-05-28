@@ -55,7 +55,6 @@ Welcome to CricWic, an e-commerce shopping app built using the MERN (MongoDB, Ex
     ```bash
     npm install
     cd frontend
-    npm install react@17 react-dom@17
     npm install --legacy-peer-deps
     cd ..
     ```
@@ -85,11 +84,20 @@ Welcome to CricWic, an e-commerce shopping app built using the MERN (MongoDB, Ex
 
     ````
 
-4.  Run the app:
+4.  To Run the app in dev mode (both backend and frontend):
 
     ```bash
-    cd backend &&
+    npm run dev
+    ```
+
+5.  To Run the backend
+    ```bash
     npm start
+    ```
+
+6.  To Run the frontend
+    ```bash
+    npm run start-client
     ```
 
 ## Features
