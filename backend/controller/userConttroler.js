@@ -10,7 +10,6 @@ const cloudinary = require("cloudinary");
 // signUp controller>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.registerUser = asyncWrapper(async (req, res) => {
   const { name, email, password } = req.body;
-
   const existingUser = await userModel.findOne({ email });
   if (existingUser) {
     return next(new ErrorHandler("Email already exists", 409));
@@ -143,7 +142,7 @@ exports.resetPassword = asyncWrapper(async (req, res, next) => {
     return next(
       new ErrorHandler(
         "Reset Password Token is invalid or has been expired",
-        400
+        410
       )
     );
   }

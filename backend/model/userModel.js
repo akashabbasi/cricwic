@@ -50,12 +50,11 @@ const userSchema = new mongoose.Schema({
 //password hash>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //  this is for user  password hashing . this function will run every time when user data will change
 userSchema.pre("save", async function (next) {
-  // without this if statment password hashed each time when data modifeid . thereFore making this if loop
-  if (this.isModified("password") === false) {
-    next();
+  if (!this.isModified("password")) {
+    return next();
   }
-  // if password upadated or created then ....
-  this.password = await bcrypt.hash(this.password, 10); // this points to individule user
+
+  this.password = await bcrypt.hash(this.password, 10);
 });
 
 //JWt>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -83,7 +82,7 @@ userSchema.methods.getResetPasswordToken = function () {
   this.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetPassToken)
-    .toString("hex");
+    .digest("hex");
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000; //  resetPasswordExpire : it will make sure how much time this reset token will valid for reseting pass eg 5 min or 3min
 
   return resetPassToken;

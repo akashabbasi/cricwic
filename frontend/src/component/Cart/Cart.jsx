@@ -62,7 +62,7 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-   
+
     history.push("/login?redirect=/shipping");
   };
 
@@ -81,7 +81,7 @@ const Cart = () => {
   return (
     <>
       <div className="cartPage">
-  <MetaData title="Your Cart" />  
+        <MetaData title="Your Cart" />
         <div className="cart_HeaderTop">
           <div className="headerLeft">
             <Typography variant="h5" component="h1" className="cartHeading">
@@ -110,7 +110,7 @@ const Cart = () => {
               Your Shopping Cart is Empty
             </Typography>
             <Typography variant="body" className="cartText">
-              Nothin' to see here.
+              Nothing to see here.
             </Typography>
             <Typography variant="body" className="cartText">
               Let's get shopping!
@@ -136,7 +136,7 @@ const Cart = () => {
                         decreaseQuantity={decreaseQuantity}
                         increaseQuantity={increaseQuantity}
                         length={cartItems.length}
-                        id = {item.productId}
+                        id={item.productId}
                       />
                     </Link>
                   ))}
@@ -156,12 +156,12 @@ const Cart = () => {
                       <p>{totalPrice}</p>
                     </div>
 
-                    <div className="discount order_Summary_Item">
+                    {/* <div className="discount order_Summary_Item">
                       <span>Discount</span>
                       <p>
                         <del>{totalDiscount}</del>
                       </p>
-                    </div>
+                    </div> */}
 
                     <div className="delivery order_Summary_Item">
                       <span>Delivery</span>
@@ -186,7 +186,7 @@ const Cart = () => {
                         </p>
                       </div>
                       <p>
-                        <b>{final}</b>
+                        <b>{totalPrice}</b>
                       </p>
                     </div>
                   </div>
@@ -196,9 +196,8 @@ const Cart = () => {
 
                 <div className="coupon-box-wrapper">
                   <div
-                    className={`coupon-box-content ${
-                      isFocused ? "focused" : ""
-                    }`}
+                    className={`coupon-box-content ${isFocused ? "focused" : ""
+                      }`}
                   >
                     <TextField
                       label="Enter coupon code"

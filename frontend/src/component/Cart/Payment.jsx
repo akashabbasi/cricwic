@@ -673,12 +673,12 @@ const PaymentComponent = () => {
                   <p>{totalPrice}</p>
                 </div>
 
-                <div className="discount order_Summary_Item">
+                {/* <div className="discount order_Summary_Item">
                   <span>Discount</span>
                   <p>
                     <del>{totalDiscount}</del>
                   </p>
-                </div>
+                </div> */}
 
                 <div className="delivery order_Summary_Item">
                   <span>Delivery</span>
@@ -703,7 +703,7 @@ const PaymentComponent = () => {
                     </p>
                   </div>
                   <p>
-                    <b>{final}</b>
+                    <b>{totalPrice}</b>
                   </p>
                 </div>
               </div>

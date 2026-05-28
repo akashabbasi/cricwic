@@ -12,6 +12,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useAlert } from "react-alert";
 import {
   dispalyMoney,
   // generateDiscountedPrice 
@@ -155,6 +156,7 @@ const buttonVariants = {
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
+  const alert = useAlert();
   const classes = useStyles();
 
   const productPrice = dispalyMoney(product.price);
@@ -175,6 +177,7 @@ const ProductCard = ({ product }) => {
 
   const addTocartHandler = (id, qty) => {
     dispatch(addItemToCart(id, qty));
+    alert.success("Product Added To Cart");
   };
 
   return (

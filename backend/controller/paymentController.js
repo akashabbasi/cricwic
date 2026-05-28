@@ -5,7 +5,6 @@ const stripe = require("../utils/stripe");
 // process the payment
 exports.processPayment = asyncWrapper(async (req, res, next) => {
   const { amount } = req.body;
-
   // extra safety validation
   if (!Number.isInteger(amount) || amount <= 0) {
     return next(new ErrorHandler("Invalid payment amount", 400));
@@ -15,20 +14,17 @@ exports.processPayment = asyncWrapper(async (req, res, next) => {
     const myPayment = await stripe.paymentIntents.create({
       amount,
       currency: "pkr",
-
       metadata: {
         company: "CricWic",
         userId: req.user?.id || 'unknown',
         timestamp: new Date().toISOString()
       },
-
       automatic_payment_methods: {
         enabled: true,
       },
     });
 
     console.log('Payment Intent Created:', myPayment.id);
-
     res.status(200).json({ 
       success: true, 
       client_secret: myPayment.client_secret 

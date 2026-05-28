@@ -16,7 +16,7 @@ const sendJWtToken  = (user , statusCode , res) =>{
     };
     
     // wrapping all data into cookie eg token and options data
-    
+    delete user.password;
     res.status(statusCode).cookie("token", token, options).json({
         success: true,
         user,

@@ -1,7 +1,7 @@
 import React, { useState, lazy, Suspense } from "react";
-import { Typography, Grid, Select, MenuItem, Button } from "@material-ui/core";
+import { Typography, Grid, Select, MenuItem } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
- import CricketBallLoader from "../layouts/loader/Loader";
+import CricketBallLoader from "../layouts/loader/Loader";
 import { useStyles } from "./ReviewStyle";
 import MyCard from "./Card";
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 const DialogBox = lazy(() => import("./DialogBox"));
 
 
-const ReviewCard = ({ product }) => { 
+const ReviewCard = ({ product }) => {
   const classes = useStyles();
   const { isAuthenticated } = useSelector((state) => state.userData);
   const alert = useAlert();
@@ -44,9 +44,9 @@ const ReviewCard = ({ product }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-     if (!isAuthenticated) {
+    if (!isAuthenticated) {
       alert.error("Please Login to write a review");
-     history.push("/login");
+      history.push("/login");
     }
     setOpen(true);
   };
@@ -61,15 +61,6 @@ const ReviewCard = ({ product }) => {
       <Typography variant="h5" component="h1" className={classes.reviewHeader}>
         Users Reviews
       </Typography>
-      <Button
-        variant="contained"
-        className={classes.submitBtn}
-        fullWidth
-        style={{ marginTop: "2rem" }}
-        onClick={handleClickOpen}
-      >
-        Write your Review
-      </Button>
 
       <Suspense fallback={<CricketBallLoader />}>
         <DialogBox

@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -8,13 +8,12 @@ import {
   IconButton,
   Input,
 } from "@material-ui/core";
-import DeleteIcon from "@mui/icons-material/Delete";
+
+import DeleteIcon from "@material-ui/icons/Delete";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import {
   dispalyMoney,
-  generateDiscountedPrice,
-
 } from "../DisplayMoney/DisplayMoney";
 
 
@@ -199,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "0rem",
     },
   },
- 
+
 }));
 
 
@@ -214,14 +213,9 @@ function CartItem({
 }) {
   const classes = useStyles();
 
-  /// calculate price after discount
-
-  let finalPrice = generateDiscountedPrice(item.price);
-  let discountedPrice = item.price - finalPrice;
-  discountedPrice = dispalyMoney(discountedPrice);
-  let total = finalPrice * item.quantity;
+  let total = item.price * item.quantity;
   total = dispalyMoney(total);
-  finalPrice = dispalyMoney(finalPrice);
+
 
   return (
     <Card className={length < 2 ? classes.root11 : classes.roots11}>
@@ -251,16 +245,16 @@ function CartItem({
               Price:
             </Typography>
             <Typography variant="subtitle1" className={classes.itemPrice}>
-              {finalPrice}
+              {total}
             </Typography>
-            <Typography
+            {/* <Typography
               variant="caption"
               component="span"
               color="black"
               className={classes.itemOldPrice}
             >
               <del>{discountedPrice}</del>
-            </Typography>
+            </Typography> */}
           </div>
         </div>
         <div className={classes.contentBottom}>

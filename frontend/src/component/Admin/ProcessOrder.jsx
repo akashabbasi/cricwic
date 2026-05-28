@@ -357,12 +357,12 @@ function ProcessOrder() {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      
-      alert.success("Order Updated Successfully");  
+
+      alert.success("Order Updated Successfully");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
-    dispatch(getOrderDetails(productId)); 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getOrderDetails(productId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, alert, error, isUpdated, updateError, productId]);
 
   const updateOrderSubmitHandler = (e) => {
@@ -413,9 +413,9 @@ function ProcessOrder() {
                           key={idx}
                           item={item}
                           totalDiscount={
-                            `₹${(item.price * item.quantity * 20) / 100}` // random discount between 1 to 30
+                            `PKR ${(item.price * item.quantity * 20) / 100}` // random discount between 1 to 30
                           }
-                          totalPrice={`₹${item.price * item.quantity}`}
+                          totalPrice={`PKR ${item.price * item.quantity}`}
                         />
                       </Link>
                     ))}
@@ -500,7 +500,7 @@ function ProcessOrder() {
                   </div>
                   <p>
                     <b style={{ marginLeft: "-2rem" }}>
-                      ₹{order.totalPrice && order.totalPrice}
+                      PKR {order.totalPrice && order.totalPrice}
                     </b>
                   </p>
                 </div>
@@ -538,7 +538,7 @@ function ProcessOrder() {
                     <b className={classes.greenFont}>
                       {" "}
                       {order.paymentInfo &&
-                      order.paymentInfo.status === "succeeded"
+                        order.paymentInfo.status === "succeeded"
                         ? "PAID"
                         : "NOT PAID"}
                     </b>
@@ -583,8 +583,8 @@ function ProcessOrder() {
                             loading
                               ? true
                               : false || status === ""
-                              ? true
-                              : false
+                                ? true
+                                : false
                           }
                         >
                           Process

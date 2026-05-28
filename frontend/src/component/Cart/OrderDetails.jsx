@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     gap: "2.5rem",
     padding: "1rem 0rem 0rem 0rem",
-    
-      
+
+
 
 
   },
@@ -86,9 +86,9 @@ const OrderDetailsSection = ({ item, totalDiscount, totalPrice }) => {
           <Typography variant="body2" className={classes.finalPrice}>
             {totalPrice}
           </Typography>
-          <Typography variant="body2" className={classes.discountPrice}>
+          {/* <Typography variant="body2" className={classes.discountPrice}>
             {totalDiscount}
-          </Typography>
+          </Typography> */}
         </div>
         <div>
           <Typography variant="body2" className={classes.paymentStatus}>

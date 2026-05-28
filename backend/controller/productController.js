@@ -7,7 +7,6 @@ const cloudinary = require("cloudinary");
 // >>>>>>>>>>>>>>>>>>>>> createProduct Admin route  >>>>>>>>>>>>>>>>>>>>>>>>
 exports.createProduct = asyncWrapper(async (req, res) => {
   let images = []; 
-
   if (req.body.images) {
     if (typeof req.body.images === "string") {
       images.push(req.body.images);
@@ -16,11 +15,9 @@ exports.createProduct = asyncWrapper(async (req, res) => {
     }
 
     const imagesLinks = [];
-
     // Split images into chunks due to cloudinary upload limits only 3 images can be uploaded at a time so we are splitting into chunks and uploading them separately eg: 9 images will be split into 3 chunks and uploaded separately
     const chunkSize = 3;
     const imageChunks = [];
-
     for (let i = 0; i < images.length; i += 3) {
       imageChunks.push(images.slice(i, i + 3));
     }
@@ -33,9 +30,7 @@ exports.createProduct = asyncWrapper(async (req, res) => {
         })
       );
 
-      
       const results = await Promise.all(uploadPromises); // wait for all the promises to resolve and store the results in results array eg: [{}, {}, {}] 3 images uploaded successfully and their details are stored in results array
-
       for (let result of results) { 
         imagesLinks.push({
           product_id: result.public_id,
@@ -43,13 +38,11 @@ exports.createProduct = asyncWrapper(async (req, res) => {
         });
       }
     }
-
     req.body.user = req.user.id;
     req.body.images = imagesLinks;
   }
 
   const data = await ProductModel.create(req.body);
-
   res.status(200).json({ success: true, data: data });
 });
 
@@ -80,9 +73,6 @@ exports.getAllProducts = asyncWrapper(async (req, res) => {
     filteredProductCount: filteredProductCount,
   });
 });
-
-
-
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> get all product admin route>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -186,9 +176,7 @@ exports.getProductDetails = asyncWrapper(async (req, res, next) => {
 
 exports.createProductReview = asyncWrapper(async (req, res, next) => {
   const { ratings, comment, productId, title, recommend } = req.body;
-
   const product = await ProductModel.findById(productId);
-
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
@@ -221,18 +209,13 @@ exports.createProductReview = asyncWrapper(async (req, res, next) => {
   }
 
   // 🔥 Recalculate ratings efficiently
-  const totalRatings = product.reviews.reduce(
-    (acc, item) => acc + item.ratings,
-    0
-  );
-
+  const totalRatings = product.reviews.reduce((acc, item) => acc + item.ratings, 0);
   product.ratings =
     product.reviews.length === 0
       ? 0
       : totalRatings / product.reviews.length;
 
   product.numOfReviews = product.reviews.length;
-
   await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
@@ -261,9 +244,7 @@ exports.getProductReviews = asyncWrapper(async (req, res, next) => {
 //>>>>>>>>>>>>>>>>>>>>>> delete review >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.deleteReview = asyncWrapper(async (req, res, next) => {
   const { productId, id: reviewId } = req.query;
-
   const product = await ProductModel.findById(productId);
-
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
@@ -272,14 +253,12 @@ exports.deleteReview = asyncWrapper(async (req, res, next) => {
   const reviewIndex = product.reviews.findIndex(
     (rev) => rev._id.toString() === reviewId.toString()
   );
-
   if (reviewIndex === -1) {
     return next(new ErrorHandler("Review not found", 404));
   }
 
   // 🔥 Remove review directly
   product.reviews.splice(reviewIndex, 1);
-
   // 🔥 Recalculate ratings safely
   const totalRatings = product.reviews.reduce(
     (acc, item) => acc + item.ratings,
@@ -292,7 +271,6 @@ exports.deleteReview = asyncWrapper(async (req, res, next) => {
       : totalRatings / product.reviews.length;
 
   product.numOfReviews = product.reviews.length;
-
   await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
