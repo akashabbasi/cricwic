@@ -8,6 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { colors, typography } from "../theme";
 
+import heroImg1 from "../../Image/Cricket-wepon/img2.png";
+import heroImg2 from "../../Image/Cricket-wepon/03.jpg";
+import heroImg3 from "../../Image/Cricket-wepon/01.jpg";
+import heroImg4 from "../../Image/Cricket-wepon/04.jpg";
+
 const useStyles = makeStyles((theme) => ({
   heroContainer: {
     position: "relative",
@@ -206,7 +211,7 @@ const buttonVariants = {
 
 const slides = [
   {
-    image: require("../../Image/Cricket-wepon/img2.png"),
+    image: heroImg1,
     tagline: "Premium Cricket Gear",
     quote: "Unleash Your Passion for Cricket",
     saleText:
@@ -214,7 +219,7 @@ const slides = [
     productText: "Shop Now",
   },
   {
-    image: require("../../Image/Cricket-wepon/03.jpg"),
+    image: heroImg2,
     tagline: "Limited Time Offer",
     quote: "Experience Victory with Our Equipment",
     saleText:
@@ -222,14 +227,14 @@ const slides = [
     productText: "Buy Now",
   },
   {
-    image: require("../../Image/Cricket-wepon/01.jpg"),
+    image: heroImg3,
     tagline: "New Arrivals",
     quote: "Dominate the Field Like Never Before",
     saleText: "Discover the latest innovations and stay ahead of the competition",
     productText: "Explore",
   },
   {
-    image: require("../../Image/Cricket-wepon/04.jpg"),
+    image: heroImg4,
     tagline: "Pro Collection",
     quote: "Elevate Your Performance",
     saleText: "Enhance your skills and excel on the field with cutting-edge gear",
@@ -341,15 +346,14 @@ export default function HeroSlider() {
           </div>
         ))}
       </Carousel>
-      
+
       {/* Custom Indicators */}
       <div className={classes.indicators}>
         {slides.map((_, index) => (
           <motion.div
             key={index}
-            className={`${classes.indicator} ${
-              activeStep === index ? classes.indicatorActive : ""
-            }`}
+            className={`${classes.indicator} ${activeStep === index ? classes.indicatorActive : ""
+              }`}
             onClick={() => setActiveStep(index)}
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}

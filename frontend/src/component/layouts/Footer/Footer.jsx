@@ -7,6 +7,10 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GooglePlay from "../../../Image/Footer/google-play-black.svg";
 import AppStore from "../../../Image/Footer/app-store-black.svg";
 import "./Footer.css";
+
+// ⚡ Modern Static Asset Import for Vite (Replaces dynamic require statements)
+import footerLogo from "../../../Image/Footer/logo.png";
+
 const footMenu = [
   {
     id: 1,
@@ -127,8 +131,6 @@ const footSocial = [
   },
 ];
 
-
-
 const Footer = () => {
   const [subValue, setSubValue] = useState("");
 
@@ -149,7 +151,7 @@ const Footer = () => {
               <div className="foot_logo">
                 <Link to="/" style={{ textDecoration: "none" }}>
                   <img
-                    src={require("../../../Image/Footer/logo.png")}
+                    src={footerLogo}
                     alt="cricekt weapon logo"
                   />
                   <h1 className="Foot_heading">Cricket Weapon</h1>
@@ -180,11 +182,11 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="foot_menu_container">
+            <div className="foot_menu_container">
               {footMenu.map((item) => {
                 const { id, title, menu } = item;
                 return (
-                  <div class="foot_menu foot2" key={id}>
+                  <div className="foot_menu foot2" key={id}>
                     <h4>{title}</h4>
                     <ul>
                       {menu.map((item) => {

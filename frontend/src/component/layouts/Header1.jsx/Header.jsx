@@ -12,6 +12,7 @@ import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
 
 import ProfileModal from "./ProfileModel";
+import appLogo from "../../../Image/logo.png";
 
 function Header() {
   const history = useHistory();
@@ -139,7 +140,7 @@ function Header() {
           {!searchBarActive && (
             <Link to="/">
               <img
-                src={require("../../../Image/logo.png")}
+                src={appLogo}
                 alt="logo"
                 className="headerBottom__logo_main"
               />

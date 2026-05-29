@@ -38,8 +38,11 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
-import { ReactComponent as MasterCard } from "../../Image/payment-svg/mastercard.svg";
-import { ReactComponent as Visa } from "../../Image/payment-svg/visa.svg";
+
+import mastercardSvg from "../../Image/payment-svg/mastercard.svg";
+import visaSvg from "../../Image/payment-svg/visa.svg";
+import cartImgPng from "../../Image/cart/cart_img.png";
+
 import {
   dispalyMoney,
   generateDiscountedPrice,
