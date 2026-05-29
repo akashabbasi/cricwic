@@ -8,13 +8,16 @@ import Button from "@material-ui/core/Button";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { Link } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData";
-// import { useNavigate } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import CartItem from "./CartItem";
 import {
   dispalyMoney,
   generateDiscountedPrice,
 } from "../DisplayMoney/DisplayMoney";
+
+// ⚡ Modern Static Asset Import for Vite (Fixes the Uncaught ReferenceError)
+import cartPaymentIcons from "../../Image/cart/cart_img.png";
+
 const Cart = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -62,11 +65,10 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-
     history.push("/login?redirect=/shipping");
   };
 
-  // claculte price after discount
+  // calculate price after discount
   let totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -125,12 +127,13 @@ const Cart = () => {
               <div className="cart_left_container">
                 {cartItems &&
                   cartItems.map((item) => (
+                    /* ⚡ Moved unique key here onto the outermost array child component to satisfy strict list rules */
                     <Link
+                      key={item.productId}
                       to="#"
                       style={{ textDecoration: "none", color: "none" }}
                     >
                       <CartItem
-                        key={item.productId}
                         item={item}
                         deleteCartItems={deleteCartItems}
                         decreaseQuantity={decreaseQuantity}
@@ -152,16 +155,8 @@ const Cart = () => {
                   <div className="order_summary_details">
                     <div className="price order_Summary_Item">
                       <span>Original Price</span>
-                      {/* ORIGINAL PRICE TOATAL */}
                       <p>{totalPrice}</p>
                     </div>
-
-                    {/* <div className="discount order_Summary_Item">
-                      <span>Discount</span>
-                      <p>
-                        <del>{totalDiscount}</del>
-                      </p>
-                    </div> */}
 
                     <div className="delivery order_Summary_Item">
                       <span>Delivery</span>
@@ -232,7 +227,7 @@ const Cart = () => {
 
                 <div className="paymentLogoImg">
                   <img
-                    src={require("../../Image/cart/cart_img.png")}
+                    src={cartPaymentIcons}
                     alt="payemnt-icons"
                     className="paymentImg"
                   />

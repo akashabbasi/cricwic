@@ -7,6 +7,8 @@ import {
   FormControlLabel,
   Grid,
   Typography,
+  InputAdornment, // ✅ Added for layout tracking placement
+  IconButton,     // ✅ Replaced custom Button for proper layout styling padding
 } from "@material-ui/core";
 import CricketBallLoader from "../layouts/loader/Loader";
 import MetaData from "../layouts/MataData/MataData";
@@ -17,8 +19,10 @@ import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./LoginFromStyle";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
+// ✅ Upgraded legacy v4 imports to match your project dependencies
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 function Signup() {
@@ -67,7 +71,6 @@ function Signup() {
   };
 
   const handleAvatarChange = (event) => {
-
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -75,7 +78,6 @@ function Signup() {
       reader.onload = () => {
         setAvatarPreview(reader.result);
         setAvatar(reader.result);
-
       };
     }
   };
@@ -119,7 +121,6 @@ function Signup() {
     setLoading(true);
     e.preventDefault();
 
-
     if (password !== confirmPassword) {
       alert.error("Password and Confirm Password do not match");
       setLoading(false);
@@ -143,7 +144,7 @@ function Signup() {
         <CricketBallLoader />
       ) : (
         <div className={classes.formContainer}>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={handleSignUpSubmit}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
@@ -177,6 +178,7 @@ function Signup() {
                   : ""
               }
             />
+
             <TextField
               label="Password"
               variant="outlined"
@@ -185,39 +187,46 @@ function Signup() {
               className={`${classes.passwordInput} ${classes.textField}`}
               error={!isValidPassword && password !== ""}
               helperText={!isValidPassword && password !== "" ? "Password must be at least 8 characters." : ""}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={password}
               onChange={handlePasswordChange}
+              /* ⚡ Corrected Input Layout */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+
             <TextField
               label="Confirm Password"
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
+              /* ⚡ Corrected Input Layout */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
 
             <div className={classes.root}>
@@ -277,17 +286,17 @@ function Signup() {
               className={classes.termsAndConditionsText}
             >
               I acknowledge Cricket Weapon will use my information in accordance
-              with its
-              <Link href="#" className={classes.privacyText}>
+              with its{" "}
+              <Link to="/policy/privacy" className={classes.privacyText}>
                 Privacy Policy.
               </Link>
             </Typography>
 
             <Button
+              type="submit" /* Triggers form submission cleanly */
               variant="contained"
               className={classes.loginButton}
               fullWidth
-              onClick={handleSignUpSubmit}
               disabled={isSignInDisabled || loading}
             >
               Create Account
@@ -298,7 +307,7 @@ function Signup() {
               align="center"
               style={{ marginTop: "1rem" }}
             >
-              Already have an account?
+              Already have an account?{" "}
               <Link to="/login" className={classes.createAccount}>
                 Login
               </Link>

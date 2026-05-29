@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Button, TextField, Typography } from "@material-ui/core";
-import SecurityUpdateGoodIcon from "@mui/icons-material/SecurityUpdateGood";
-import useStyles from "./LoginFromStyle";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {
+  Avatar,
+  Button,
+  TextField,
+  Typography,
+  InputAdornment, // ✅ Added for native input adornment placement
+  IconButton      // ✅ Replaced custom Button for standard input alignment sizing
+} from "@material-ui/core";
+
+// ✅ Upgraded legacy v4 imports to match your project dependencies
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
 import { Link } from "react-router-dom";
 import CricketBallLoader from "../layouts/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +20,8 @@ import { updatePassword, clearErrors } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstanat";
 import MetaData from "../layouts/MataData/MataData";
-import { useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom";
+import useStyles from "./LoginFromStyle";
 
 function UpdatePassword() {
   const history = useHistory();
@@ -28,6 +38,7 @@ function UpdatePassword() {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isValidConfirmPassword, setisValidConfirmPassword] = useState(true);
+
   const handleOldPassword = (event) => {
     setOldPassword(event.target.value);
   };
@@ -87,9 +98,9 @@ function UpdatePassword() {
         <CricketBallLoader />
       ) : (
         <div className={classes.formContainer}>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={updatePasswordSubmitHandler}>
             <Avatar className={classes.avatar}>
-              <SecurityUpdateGoodIcon />
+              <VpnKeyIcon />
             </Avatar>
             <Typography variant="h5" component="h1" className={classes.heading}>
               Update Password
@@ -102,20 +113,24 @@ function UpdatePassword() {
               type={showPassword ? "text" : "password"}
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={oldPassword}
               onChange={handleOldPassword}
+              /* ⚡ Corrected Input End Adornment Layout */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+
             <TextField
               style={{ marginTop: "4rem" }}
               label="Password"
@@ -129,20 +144,24 @@ function UpdatePassword() {
                   ? "Password must be at least 8 characters"
                   : ""
               }
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={newPassword}
               onChange={handlePasswordChange}
+              /* ⚡ Corrected Input End Adornment Layout */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+
             <TextField
               label="Confirm Password"
               variant="outlined"
@@ -155,28 +174,31 @@ function UpdatePassword() {
                   : ""
               }
               className={`${classes.passwordInput} ${classes.textField}`}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
+              /* ⚡ Corrected Input End Adornment Layout */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
 
             <Button
+              type="submit" /* Form naturally maps submission natively */
               variant="contained"
               className={classes.loginButton}
               fullWidth
               disabled={isSignInDisabled}
               style={{ marginTop: "3.5rem" }}
-              onClick={updatePasswordSubmitHandler}
             >
               Update New Password
             </Button>

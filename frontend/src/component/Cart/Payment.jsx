@@ -572,15 +572,19 @@ const PaymentComponent = () => {
                 </Grid>
                 <Grid item xs={12} container justifyContent="space-between">
                   <Grid item className={classes.icons}>
-                    <MasterCard
+                    <img
+                      src={mastercardSvg}
+                      alt="MasterCard"
                       style={{
-                        width: "5%",
+                        width: "35px",   /* Controlled explicitly so it sits naturally next to Visa */
                         height: "auto",
                       }}
                     />
-                    <Visa
+                    <img
+                      src={visaSvg}
+                      alt="Visa"
                       style={{
-                        width: "5%",
+                        width: "35px",
                         height: "auto",
                       }}
                     />
@@ -747,7 +751,7 @@ const PaymentComponent = () => {
 
             <div className="paymentLogoImg">
               <img
-                src={require("../../Image/cart/cart_img.png")}
+                src={cartImgPng}
                 alt="payemnt-icons"
                 className="paymentImg"
               />

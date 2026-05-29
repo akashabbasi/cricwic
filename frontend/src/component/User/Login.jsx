@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   FormControlLabel,
@@ -7,30 +7,34 @@ import {
   Typography,
   Grid,
   Avatar,
+  InputAdornment, // ✅ Added for structured attachment placement
+  IconButton,     // ✅ Replaced Button for native input padding behavior
 } from "@material-ui/core";
 import useStyles from "./LoginFromStyle";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
+
+// ✅ Upgraded legacy v4 imports to match your project dependencies
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { login, clearErrors } from "../../actions/userAction";
 import CricketBallLoader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
-import MetaData from "../layouts/MataData/MataData"
+import MetaData from "../layouts/MataData/MataData";
 
 export default function Login() {
+  const history = useHistory();
+  const location = useLocation();
 
-    const history = useHistory();
-    const loaction = useLocation();
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
-    const dispatch = useDispatch();
-    const alert = useAlert();
-
-    const { isAuthenticated, loading, error } = useSelector(
-      (state) => state.userData
-    );
+  const { isAuthenticated, loading, error } = useSelector(
+    (state) => state.userData
+  );
 
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
@@ -53,30 +57,26 @@ export default function Login() {
   const handleShowPasswordClick = () => {
     setShowPassword(!showPassword);
   };
-  
 
   const isSignInDisabled = !(email && password && isValidEmail);
 
-  
-    const redirect = loaction.search
-      ? loaction.search.split("=")[1]
-      : "/account";
-   useEffect(() => {
-     if (error) {
-       alert.error(error);
-       dispatch(clearErrors());
-     }
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
 
-     if (isAuthenticated) {
-       history.push(redirect);
-     }
-   }, [dispatch, isAuthenticated, loading, error, alert , history , redirect]);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
 
-     function handleLoginSubmit(e) {
-       e.preventDefault();
-       dispatch(login(email, password));
-     }
+    if (isAuthenticated) {
+      history.push(redirect);
+    }
+  }, [dispatch, isAuthenticated, loading, error, alert, history, redirect]);
 
+  function handleLoginSubmit(e) {
+    e.preventDefault();
+    dispatch(login(email, password));
+  }
 
   return (
     <>
@@ -85,7 +85,7 @@ export default function Login() {
         <CricketBallLoader />
       ) : (
         <div className={classes.formContainer}>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={handleLoginSubmit}>
             <Avatar className={classes.avatar}>
               <LockOpenIcon />
             </Avatar>
@@ -112,19 +112,22 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    variant="outlined"
-                    className={classes.showPasswordButton}
-                    onClick={handleShowPasswordClick}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </Button>
-                ),
-              }}
               value={password}
               onChange={handlePasswordChange}
+              /* ⚡ Corrected: Uses unified InputAdornment + IconButton structure */
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPasswordClick}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Grid container className={classes.rememberMeContainer}>
               <Grid item>
@@ -153,11 +156,11 @@ export default function Login() {
               </Link>
             </Typography>
             <Button
+              type="submit" /* Changed to type="submit" so pressing Enter submits the form */
               variant="contained"
               className={classes.loginButton}
               fullWidth
               disabled={isSignInDisabled}
-              onClick={handleLoginSubmit}
             >
               Sign in
             </Button>
@@ -166,7 +169,7 @@ export default function Login() {
               align="center"
               style={{ marginTop: "1rem" }}
             >
-              Don't have an account?
+              Don't have an account?{" "}
               <Link to="/signup" className={classes.createAccount}>
                 Create Account
               </Link>

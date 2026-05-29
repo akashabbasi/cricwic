@@ -5,14 +5,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
+// ⚡ Modern Static Asset Import for Vite (Replaces dynamic require statements)
+import adminNavbarLogo from "../../Image/logo.png";
+
 const useStyles = makeStyles((theme) => ({
   navbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-   zIndex: 999,
+    zIndex: 999,
     background: "#ffffff",
-    
     width: "100%",
     padding: "1.5rem 1rem 1rem 1rem",
     boxShadow:
@@ -94,13 +96,12 @@ const useStyles = makeStyles((theme) => ({
     height: "3.5rem",
     alignSelf: "center",
     paddingLeft: "25px",
-  "& img": {
-    height: "100%",
-    width: "auto",
+    "& img": {
+      height: "100%",
+      width: "auto",
+    },
   },
-
-  },
-})); 
+}));
 
 const Navbar = ({ toggleHandler }) => {
   const classes = useStyles();
@@ -113,10 +114,10 @@ const Navbar = ({ toggleHandler }) => {
       <div className={classes.dashboardHead}>
         <Link
           to="/admin/dashboard"
-          style={{ textDecoration: "none", color: "none" , width: "100%" , height: "100%"}}
+          style={{ textDecoration: "none", color: "none", width: "100%", height: "100%" }}
         >
           <img
-            src={require("../../Image/logo.png")}
+            src={adminNavbarLogo}
             alt="logo"
             className={classes.headerBottom__logo_main}
           />
